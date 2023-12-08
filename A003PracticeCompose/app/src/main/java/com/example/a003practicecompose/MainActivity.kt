@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -78,7 +79,7 @@ fun ButtonList(
                 .padding(8.dp)
         ) {
             Text(
-                text = "Compose Article",
+                text = stringResource(R.string.compose_article),
                 fontSize = 20.sp
             )
         }
@@ -89,7 +90,7 @@ fun ButtonList(
                 .padding(8.dp)
         ) {
             Text(
-                text = "Task Manager",
+                text = stringResource(R.string.task_manager),
                 fontSize = 20.sp
             )
         }
@@ -101,7 +102,7 @@ fun ButtonList(
 
         ) {
             Text(
-                text = "Compose Quadrant",
+                text = stringResource(R.string.compose_quadrant),
                 fontSize = 20.sp
             )
         }
