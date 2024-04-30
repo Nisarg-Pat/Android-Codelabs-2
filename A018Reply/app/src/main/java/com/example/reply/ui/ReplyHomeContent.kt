@@ -40,6 +40,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -111,10 +112,11 @@ fun ReplyListAndDetailContent(
             }
         }
         val activity = LocalContext.current as Activity
+        val detailsScreenContentDescription = stringResource(R.string.details_screen)
         ReplyDetailsScreen(
             replyUiState = replyUiState,
-            onBackPressed = {},
-            modifier = Modifier.weight(1f)
+            onBackPressed = { activity.finish() },
+            modifier = Modifier.weight(1f).testTag(detailsScreenContentDescription)
         )
     }
 }
