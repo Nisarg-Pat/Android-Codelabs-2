@@ -1,4 +1,93 @@
 <resources>
     <string name="app_name">MyCity</string>
     <string name="app_name_2">A020 MyCity</string>
+
+    <string name="category_coffee_shop">Coffee Shops</string>
+    <string name="category_restaurant">Restaurants</string>
+    <string name="category_park">Parks</string>
+    <string name="category_shopping_center">Shopping Centers</string>
+
+
+    <string name="recommendations_name_1">Thinking Cup</string>
+    <string name="recommendations_desc_1">Thinking Cup is known for serving Stumptown Coffee, one of the best roasters in the country. It has a cozy atmosphere, perfect for reading or working. The cafe also offers a variety of pastries, sandwiches, and other treats.</string>
+    <string name="recommendations_loc_1">Multiple locations including 165 Tremont Street, Boston.</string>
+
+    <string name="recommendations_name_2">George Howell Coffee</string>
+    <string name="recommendations_desc_2">This coffee shop is a must-visit for coffee aficionados. George Howell is dedicated to sourcing and roasting the finest beans from around the world. The shop also offers a range of pastries and light bites.</string>
+    <string name="recommendations_loc_2">Inside the Godfrey Hotel at 505 Washington Street, Boston.</string>
+
+    <string name="recommendations_name_3">Tatte Bakery &amp; Cafe</string>
+    <string name="recommendations_desc_3">Tatte is beloved for its beautiful pastries, fresh bread, and strong coffee. The decor is charming, with a bright and airy ambiance. It’s a great spot for breakfast or brunch.</string>
+    <string name="recommendations_loc_3">Multiple locations including 70 Charles Street, Boston.</string>
+
+    <string name="recommendations_name_4">Pavement Coffeehouse</string>
+    <string name="recommendations_desc_4">A local chain known for its excellent coffee and freshly baked bagels. Pavement Coffeehouse has a relaxed, student-friendly vibe with plenty of seating for studying or socializing.</string>
+    <string name="recommendations_loc_4">Multiple locations including 1096 Boylston Street, Boston.</string>
+
+    <string name="recommendations_name_5">Blue Bottle Coffee</string>
+    <string name="recommendations_desc_5">Renowned for its high-quality beans and precise brewing methods, Blue Bottle offers a minimalist and modern coffee experience. The shop also features a small selection of pastries.</string>
+    <string name="recommendations_loc_5">100 Federal Street, Boston.</string>
+
+    <string name="recommendations_name_6">Oleana</string>
+    <string name="recommendations_desc_6">Oleana offers a Mediterranean-inspired menu with a focus on fresh, local ingredients. The dishes are creative and beautifully presented, making it a favorite for food lovers. The outdoor patio is particularly charming.</string>
+    <string name="recommendations_loc_6">134 Hampshire Street, Cambridge.</string>
+
+    <string name="recommendations_name_7">Neptune Oyster</string>
+    <string name="recommendations_desc_7">A small, intimate seafood restaurant famous for its lobster rolls and raw bar. Neptune Oyster is a must-visit for seafood enthusiasts. Be prepared for a wait, as it\'s very popular.</string>
+    <string name="recommendations_loc_7">63 Salem Street, Boston.</string>
+
+    <string name="recommendations_name_8">Union Oyster House</string>
+    <string name="recommendations_desc_8">As the oldest continuously operating restaurant in the United States, Union Oyster House offers a taste of history along with traditional New England fare. The seafood, especially the clam chowder, is a highlight.</string>
+    <string name="recommendations_loc_8">41 Union Street, Boston.</string>
+
+    <string name="recommendations_name_9">Giulia</string>
+    <string name="recommendations_desc_9">This Italian restaurant is renowned for its handmade pasta and intimate atmosphere. The menu changes seasonally to incorporate the freshest ingredients, and the open kitchen adds a unique touch to the dining experience.</string>
+    <string name="recommendations_loc_9">1682 Massachusetts Avenue, Cambridge.</string>
+
+    <string name="recommendations_name_10">Myers + Chang</string>
+    <string name="recommendations_desc_10">An eclectic restaurant serving Asian-inspired small plates with a modern twist. The vibrant atmosphere and inventive dishes make it a popular spot for brunch, lunch, or dinner.</string>
+    <string name="recommendations_loc_10">1145 Washington Street, Boston.</string>
+
+    <string name="recommendations_name_11">Boston Common</string>
+    <string name="recommendations_desc_11">The oldest public park in the United States, Boston Common is a central green space in the city. It features walking paths, a frog pond (which becomes a skating rink in winter), and open areas for recreation and relaxation.</string>
+    <string name="recommendations_loc_11">Downtown Boston, bordered by Tremont, Park, Beacon, Charles, and Boylston Streets.</string>
+
+    <string name="recommendations_name_12">Public Garden</string>
+    <string name="recommendations_desc_12">Adjacent to Boston Common, the Public Garden is known for its beautifully manicured gardens, swan boats, and the iconic George Washington statue. It\'s a picturesque spot for a leisurely stroll or a picnic.</string>
+    <string name="recommendations_loc_12">Between Charles and Arlington Streets, Boston.</string>
+
+    <string name="recommendations_name_13">Arnold Arboretum</string>
+    <string name="recommendations_desc_13">A large botanical garden and research institution affiliated with Harvard University. The arboretum features an extensive collection of trees, shrubs, and plants, with walking trails and educational exhibits.</string>
+    <string name="recommendations_loc_13">125 Arborway, Boston.</string>
+
+    <string name="recommendations_name_14">Franklin Park</string>
+    <string name="recommendations_desc_14">Designed by Frederick Law Olmsted, Franklin Park offers a mix of woodlands, playing fields, and walking trails. It also houses the Franklin Park Zoo, making it a great destination for families.</string>
+    <string name="recommendations_loc_14">Bordered by Seaver Street, Forest Hills Street, and Columbia Road.</string>
+
+    <string name="recommendations_name_15">Christopher Columbus Waterfront Park</string>
+    <string name="recommendations_desc_15">This waterfront park offers stunning views of Boston Harbor, with well-maintained gardens, walking paths, and a large playground. It\'s a great spot to relax and watch the boats.</string>
+    <string name="recommendations_loc_15">110 Atlantic Avenue, Boston.</string>
+
+    <string name="recommendations_name_16">Copley Place</string>
+    <string name="recommendations_desc_16">An upscale shopping mall featuring high-end retailers such as Neiman Marcus, Tiffany &amp; Co., and Louis Vuitton. The mall is connected to the Prudential Center and several hotels, making it a convenient shopping destination.</string>
+    <string name="recommendations_loc_16">100 Huntington Avenue, Boston.</string>
+
+    <string name="recommendations_name_17">The Shops at Prudential Center</string>
+    <string name="recommendations_desc_17">This shopping center offers a mix of retail stores, dining options, and entertainment. Highlights include Eataly, Saks Fifth Avenue, and the Skywalk Observatory, which offers panoramic views of the city.</string>
+    <string name="recommendations_loc_17">800 Boylston Street, Boston.</string>
+
+    <string name="recommendations_name_18">Faneuil Hall Marketplace</string>
+    <string name="recommendations_desc_18">A historic market complex featuring a variety of shops, restaurants, and street performers. The marketplace includes Quincy Market, which is home to numerous food stalls offering diverse cuisine.</string>
+    <string name="recommendations_loc_18">4 S Market Street, Boston.</string>
+
+    <string name="recommendations_name_19">Newbury Street</string>
+    <string name="recommendations_desc_19">One of Boston\'s most famous shopping streets, Newbury Street features a mix of high-end boutiques, art galleries, and cafes. The street is lined with beautiful brownstones, adding to its charm.</string>
+    <string name="recommendations_loc_19">Runs from Arlington Street to Massachusetts Avenue, Boston.</string>
+
+    <string name="recommendations_name_20">Cambridgeside Galleria</string>
+    <string name="recommendations_desc_20">Located just across the river in Cambridge, this shopping mall offers a wide range of stores, including popular brands like Best Buy, H&amp;M, and Apple. The mall also features several dining options and a scenic location by the Charles River.</string>
+    <string name="recommendations_loc_20">100 Cambridgeside Place, Cambridge.</string>
+
+
+
 </resources>
