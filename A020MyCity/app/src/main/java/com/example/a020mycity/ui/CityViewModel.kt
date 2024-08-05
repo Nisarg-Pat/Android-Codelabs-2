@@ -7,6 +7,7 @@ import com.example.a020mycity.data.RecommendationProvider
 import com.example.a020mycity.ui.utils.PageType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 
 class CityViewModel: ViewModel() {
     private val _uiState = MutableStateFlow(CityUiState())
@@ -26,5 +27,23 @@ class CityViewModel: ViewModel() {
                 currentRecommendation = recommendations[Category.COFFEE_SHOP]?.get(0)!!,
                 currentPage = PageType.CATEGORY
             )
+    }
+
+    fun updateCurrentPage(currentPage: PageType) {
+        _uiState.update {
+            it.copy(currentPage = currentPage)
+        }
+    }
+
+    fun updateCurrentCategory(category: Category) {
+        _uiState.update {
+            it.copy(currentCategory = category)
+        }
+    }
+
+    fun updateCurrentRecommendation(recommendation: Recommendation) {
+        _uiState.update {
+            it.copy(currentRecommendation = recommendation)
+        }
     }
 }

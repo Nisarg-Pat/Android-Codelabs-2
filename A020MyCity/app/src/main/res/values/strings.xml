@@ -3,6 +3,7 @@
     <string name="app_name_2">A020 MyCity</string>
 
     <string name="my_city">My City</string>
+    <string name="location">Location: </string>
 
     <string name="category_coffee_shop">Coffee Shops</string>
     <string name="category_restaurant">Restaurants</string>
