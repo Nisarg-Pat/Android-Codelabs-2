@@ -2,6 +2,8 @@
     <string name="app_name">MyCity</string>
     <string name="app_name_2">A020 MyCity</string>
 
+    <string name="my_city">My City</string>
+
     <string name="category_coffee_shop">Coffee Shops</string>
     <string name="category_restaurant">Restaurants</string>
     <string name="category_park">Parks</string>
