@@ -3,10 +3,12 @@ package com.example.a020mycity.ui
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -30,6 +32,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -43,14 +46,27 @@ import com.example.a020mycity.ui.theme.A020MyCityTheme
 fun CategoryListItem(
     category: Category,
     onItemClick: (Category) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    selected: Boolean = false
 ) {
+    val borderedModifier = when(selected) {
+        true ->
+            modifier
+                .fillMaxWidth()
+                .size(dimensionResource(id = R.dimen.recommendation_card_height))
+                .border(
+                    width = 2.dp,
+                    color = Color(0xFF1E90FF),
+                    shape = RoundedCornerShape(dimensionResource(id = R.dimen.recommendation_card_rounded_corner))
+                )
+        false -> modifier
+            .fillMaxWidth()
+            .size(dimensionResource(id = R.dimen.recommendation_card_height))
+    }
     Card(
         onClick = { onItemClick(category) },
         shape = RoundedCornerShape(dimensionResource(id = R.dimen.category_card_rounded_corner)),
-        modifier = modifier
-            .fillMaxWidth()
-            .size(dimensionResource(id = R.dimen.category_card_height))
+        modifier = borderedModifier
     ) {
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -84,7 +100,8 @@ fun CategoryListItem(
 fun CategoryList(
     categories: List<Category>,
     onClick: (Category) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    currentRecommendation: Recommendation? = null
 ) {
     LazyColumn(
         contentPadding = PaddingValues(dimensionResource(id = R.dimen.category_list_padding)),
@@ -94,7 +111,8 @@ fun CategoryList(
         items(categories, key = { category -> category.ordinal }) { category ->
             CategoryListItem(
                 category = category,
-                onItemClick = onClick
+                onItemClick = onClick,
+                selected = currentRecommendation?.category == category
             )
         }
     }
@@ -126,14 +144,27 @@ fun CategoryListPreview() {
 fun RecommendationListItem(
     recommendation: Recommendation,
     onItemClick: (Recommendation) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    selected: Boolean = false
 ) {
+    val borderedModifier = when(selected) {
+        true ->
+            modifier
+                .fillMaxWidth()
+                .size(dimensionResource(id = R.dimen.recommendation_card_height))
+                .border(
+                    width = 2.dp,
+                    color = Color(0xFF1E90FF),
+                    shape = RoundedCornerShape(dimensionResource(id = R.dimen.recommendation_card_rounded_corner))
+                )
+        false -> modifier
+            .fillMaxWidth()
+            .size(dimensionResource(id = R.dimen.recommendation_card_height))
+    }
     Card(
         onClick = { onItemClick(recommendation) },
         shape = RoundedCornerShape(dimensionResource(id = R.dimen.recommendation_card_rounded_corner)),
-        modifier = modifier
-            .fillMaxWidth()
-            .size(dimensionResource(id = R.dimen.recommendation_card_height))
+        modifier = borderedModifier
     ) {
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -157,7 +188,8 @@ fun RecommendationListItem(
                 color = Color.White,
                 fontWeight = FontWeight.Bold,
                 fontSize = dimensionResource(id = R.dimen.recommendation_card_text_size).value.sp,
-                modifier = Modifier
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(dimensionResource(id = R.dimen.recommendation_list_item_padding))
             )
         }
     }
@@ -168,7 +200,8 @@ fun RecommendationList(
     recommendations: List<Recommendation>,
     onClick: (Recommendation) -> Unit,
     onBackPressed: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    currentRecommendation: Recommendation? = null
 ) {
     BackHandler {
         onBackPressed()
@@ -181,7 +214,8 @@ fun RecommendationList(
         items(recommendations, key = { recommendation -> recommendation.id }) { recommendation ->
             RecommendationListItem(
                 recommendation = recommendation,
-                onItemClick = onClick
+                onItemClick = onClick,
+                selected = recommendation == currentRecommendation
             )
         }
     }
@@ -284,6 +318,57 @@ fun RecommendationDetailsPreview() {
         RecommendationDetails(
             recommendation = RecommendationProvider.allRecommendations[11],
             onBackPressed = {},
+            modifier = Modifier.fillMaxSize()
+        )
+    }
+}
+
+@Composable
+fun CategoryAndRecommendationListAndDetails(
+    categories: List<Category>,
+    recommendations: List<Recommendation>,
+    onCategoryClick: (Category) -> Unit,
+    onRecommendationClick: (Recommendation) -> Unit,
+    onBackPressed: () -> Unit,
+    currentRecommendation: Recommendation,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier.padding(dimensionResource(id = R.dimen.category_and_recommendation_list_and_details_padding)),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        CategoryList(
+            categories = categories,
+            onClick = onCategoryClick,
+            modifier = Modifier.weight(3f),
+            currentRecommendation = currentRecommendation,
+        )
+        RecommendationList(
+            recommendations = recommendations,
+            onClick = onRecommendationClick,
+            onBackPressed = {},
+            modifier = Modifier.weight(3f),
+            currentRecommendation = currentRecommendation
+        )
+        RecommendationDetails(
+            recommendation = currentRecommendation,
+            onBackPressed = onBackPressed,
+            modifier = Modifier.weight(4f)
+        )
+    }
+}
+
+@Preview(widthDp = 1000)
+@Composable
+fun CategoryAndRecommendationsListAndDetailsPreview() {
+    A020MyCityTheme {
+        CategoryAndRecommendationListAndDetails(
+            categories = Category.entries,
+            recommendations = RecommendationProvider.allRecommendations.filter { recommendation -> recommendation.category == Category.COFFEE_SHOP },
+            onCategoryClick = {},
+            onRecommendationClick = {},
+            onBackPressed = {},
+            currentRecommendation = RecommendationProvider.allRecommendations[0],
             modifier = Modifier.fillMaxSize()
         )
     }

@@ -1,5 +1,6 @@
 package com.example.a020mycity.ui
 
+import android.app.Activity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -11,6 +12,7 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -100,10 +102,24 @@ fun CityHomeScreen(
                 RecommendationDetails(
                     recommendation = uiState.currentRecommendation,
                     onBackPressed = onRecommendationDetailsBackPressed,
-                    modifier = Modifier.padding(innerPadding).fillMaxSize()
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .fillMaxSize()
                 )
             }
+        } else {
+            val activity = LocalContext.current as Activity
+            CategoryAndRecommendationListAndDetails(
+                categories = Category.entries,
+                recommendations = uiState.currentRecommendations,
+                onCategoryClick = onCategoryClick,
+                onRecommendationClick = onRecommendationClick,
+                onBackPressed = { activity.finish() },
+                currentRecommendation = uiState.currentRecommendation,
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize()
+            )
         }
-
     }
 }

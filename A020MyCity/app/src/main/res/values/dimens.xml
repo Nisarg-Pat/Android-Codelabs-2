@@ -9,10 +9,13 @@
     <dimen name="recommendation_card_padding">16dp</dimen>
     <dimen name="recommendation_list_padding">16dp</dimen>
     <dimen name="recommendation_card_rounded_corner">16dp</dimen>
+    <dimen name="recommendation_list_item_padding">16dp</dimen>
 
     <dimen name="recommendation_details_image_size">200dp</dimen>
     <dimen name="recommendation_details_name_padding">16dp</dimen>
     <dimen name="recommendation_details_text_padding">16dp</dimen>
+
+    <dimen name="category_and_recommendation_list_and_details_padding">16dp</dimen>
 
     <dimen name="category_card_text_size">24sp</dimen>
     <dimen name="recommendation_card_text_size">24sp</dimen>

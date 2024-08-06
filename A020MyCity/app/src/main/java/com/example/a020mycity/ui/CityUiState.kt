@@ -11,4 +11,8 @@ data class CityUiState (
     val currentPage: PageType = PageType.CATEGORY
 ) {
     val currentRecommendations: List<Recommendation> by lazy { recommendations[currentCategory]!! }
+
+    fun getFirstRecommendation(category: Category): Recommendation {
+        return recommendations[category]!![0]
+    }
 }

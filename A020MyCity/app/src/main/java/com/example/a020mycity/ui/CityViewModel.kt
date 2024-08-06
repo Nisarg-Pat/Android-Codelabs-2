@@ -37,7 +37,14 @@ class CityViewModel: ViewModel() {
 
     fun updateCurrentCategory(category: Category) {
         _uiState.update {
-            it.copy(currentCategory = category)
+            if(category != it.currentCategory) {
+                it.copy(
+                    currentCategory = category,
+                    currentRecommendation = it.getFirstRecommendation(category)
+                )
+            } else {
+                it.copy(currentCategory = category)
+            }
         }
     }
 
