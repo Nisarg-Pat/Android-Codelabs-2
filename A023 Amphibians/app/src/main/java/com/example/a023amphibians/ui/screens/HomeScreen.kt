@@ -1,6 +1,8 @@
 package com.example.a023amphibians.ui.screens
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -49,10 +51,12 @@ fun AmphibianScreen(
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
-        modifier = modifier.padding(8.dp)
+        modifier = modifier,
+        contentPadding = PaddingValues(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(items = amphibians, key = {amphibian -> amphibian.name}) { amphibian ->
-            AmphibianCard(amphibian, modifier = Modifier.padding(bottom = 8.dp))
+            AmphibianCard(amphibian)
         }
     }
 }
