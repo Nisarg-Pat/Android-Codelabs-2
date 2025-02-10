@@ -92,7 +92,8 @@ class SignUpFragment : Fragment() {
 
                     configureViews(View.VISIBLE, false)
 
-                    //TODO : Save the user credential password with their password provider
+                    //Save the user credential password with their password provider
+                    createPassword()
 
                     simulateServerDelayAndLogIn()
 
@@ -174,9 +175,18 @@ class SignUpFragment : Fragment() {
 
     private suspend fun createPassword() {
 
-        //TODO : CreatePasswordRequest with entered username and password
+        //CreatePasswordRequest with entered username and password
+        val request = CreatePasswordRequest(
+            binding.username.text.toString(),
+            binding.password.text.toString()
+        )
 
-        //TODO : Create credential with created password request
+        //Create credential with created password request
+        try {
+            credentialManager.createCredential(requireActivity(), request) as CreatePasswordResponse
+        } catch (e: Exception) {
+            Log.e("Auth", " Exception Message : " + e.message)
+        }
     }
 
     private suspend fun createPasskey(): CreatePublicKeyCredentialResponse? {
