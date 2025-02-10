@@ -73,11 +73,16 @@ class SignInFragment : Fragment() {
             lifecycleScope.launch {
                 configureViews(View.VISIBLE, false)
 
-                //TODO : Call getSavedCredentials() method to signin using passkey/password
+                //Call getSavedCredentials() method to signin using passkey/password
+                val data = getSavedCredentials()
 
                 configureViews(View.INVISIBLE, true)
 
-              //TODO : complete the authentication process after validating the public key credential to your server and let the user in.
+                //Complete the authentication process after validating the public key credential to your server and let the user in.
+                data?.let {
+                    sendSignInResponseToServer()
+                    listener.showHome()
+                }
             }
         }
     }
@@ -93,9 +98,8 @@ class SignInFragment : Fragment() {
     }
 
     private fun fetchAuthJsonFromServer(): String {
-        //TODO fetch authentication mock json
-
-        return ""
+        //Fetch authentication mock json
+        return requireContext().readFromAsset("AuthFromServer")
     }
 
     private fun sendSignInResponseToServer(): Boolean {
@@ -104,11 +108,46 @@ class SignInFragment : Fragment() {
 
     private suspend fun getSavedCredentials(): String? {
 
-        //TODO create a GetPublicKeyCredentialOption() with necessary authentication json from server
+        //Create a GetPublicKeyCredentialOption() with necessary authentication json from server
+        val getPublicKeyCredentialOption =
+            GetPublicKeyCredentialOption(fetchAuthJsonFromServer(), null)
 
-        //TODO create a PasswordOption to retrieve all the associated user's password
+        //Create a PasswordOption to retrieve all the associated user's password
+        val getPasswordOption = GetPasswordOption()
 
-        //TODO call getCredential() with required credential options
+        //Call getCredential() with required credential options
+        val result = try {
+            credentialManager.getCredential(
+                requireActivity(),
+                GetCredentialRequest(
+                    listOf(
+                        getPublicKeyCredentialOption,
+                        getPasswordOption
+                    )
+                )
+            )
+        } catch (e: Exception) {
+            configureViews(View.INVISIBLE, true)
+            Log.e("Auth", "getCredential failed with exception: " + e.message.toString())
+            activity?.showErrorAlert(
+                "An error occurred while authenticating through saved credentials. Check logs for additional details"
+            )
+            return null
+        }
+
+        if (result.credential is PublicKeyCredential) {
+            val cred = result.credential as PublicKeyCredential
+            DataProvider.setSignedInThroughPasskeys(true)
+            return "Passkey: ${cred.authenticationResponseJson}"
+        }
+        if (result.credential is PasswordCredential) {
+            val cred = result.credential as PasswordCredential
+            DataProvider.setSignedInThroughPasskeys(false)
+            return "Got Password - User:${cred.id} Password:${cred.password}"
+        }
+        if (result.credential is CustomCredential) {
+            //If you are also using any external sign-in libraries, parse them here with the utility functions provided.
+        }
 
         return null
     }
