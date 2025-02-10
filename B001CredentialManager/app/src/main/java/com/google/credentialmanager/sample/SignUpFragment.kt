@@ -124,11 +124,17 @@ class SignUpFragment : Fragment() {
                 lifecycleScope.launch {
                     configureViews(View.VISIBLE, false)
 
-                    //TODO : Call createPasskey() to sign up with passkey
+                    //Call createPasskey() to sign up with passkey
+                    val data = createPasskey()
 
                     configureViews(View.INVISIBLE, true)
 
-                    //TODO : complete the registration process after sending public key credential to your server and let the user in
+                    //Complete the registration process after sending public key credential to your server and let the user in
+                    data?.let {
+                        registerResponse()
+                        DataProvider.setSignedInThroughPasskeys(true)
+                        listener.showHome()
+                    }
 
                 }
             }
@@ -137,9 +143,13 @@ class SignUpFragment : Fragment() {
 
     private fun fetchRegistrationJsonFromServer(): String {
 
-        //TODO fetch registration mock response
+        //Fetch registration mock response
+        val response = requireContext().readFromAsset("RegFromServer")
 
-        return ""
+        return response.replace("<userId>", getEncodedUserId())
+            .replace("<userName>", binding.username.text.toString())
+            .replace("<userDisplayName>", binding.username.text.toString())
+            .replace("<challenge>", getEncodedChallenge())
     }
 
     private fun getEncodedUserId(): String {
@@ -172,9 +182,19 @@ class SignUpFragment : Fragment() {
     private suspend fun createPasskey(): CreatePublicKeyCredentialResponse? {
         var response: CreatePublicKeyCredentialResponse? = null
 
-        //TODO create a CreatePublicKeyCredentialRequest() with necessary registration json from server
+        //Create a CreatePublicKeyCredentialRequest() with necessary registration json from server
+        val request = CreatePublicKeyCredentialRequest(fetchRegistrationJsonFromServer())
 
-        //TODO call createCredential() with createPublicKeyCredentialRequest
+        //Call createCredential() with createPublicKeyCredentialRequest
+        try {
+            response = credentialManager.createCredential(
+                requireActivity(),
+                request
+            ) as CreatePublicKeyCredentialResponse
+        } catch (e: CreateCredentialException) {
+            configureProgress(View.INVISIBLE)
+            handlePasskeyFailure(e)
+        }
 
         return response
     }
