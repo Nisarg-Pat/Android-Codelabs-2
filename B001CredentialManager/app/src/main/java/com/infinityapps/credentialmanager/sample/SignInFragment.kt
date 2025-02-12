@@ -25,12 +25,17 @@ import android.view.ViewGroup
 import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
+import androidx.credentials.GetCredentialResponse
 import androidx.credentials.GetPasswordOption
 import androidx.credentials.GetPublicKeyCredentialOption
 import androidx.credentials.PasswordCredential
 import androidx.credentials.PublicKeyCredential
+import androidx.credentials.exceptions.NoCredentialException
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
 import com.infinityapps.credentialmanager.sample.databinding.FragmentSignInBinding
 import kotlinx.coroutines.launch
 
@@ -65,6 +70,7 @@ class SignInFragment : Fragment() {
         credentialManager = CredentialManager.create(requireActivity())
 
         binding.signInWithSavedCredentials.setOnClickListener(signInWithSavedCredentials())
+        binding.signInWithGoogle.setOnClickListener(signInWithGoogle())
     }
 
     private fun signInWithSavedCredentials(): View.OnClickListener {
@@ -87,9 +93,29 @@ class SignInFragment : Fragment() {
         }
     }
 
+    private fun signInWithGoogle(): View.OnClickListener {
+        return View.OnClickListener {
+            lifecycleScope.launch {
+                configureViews(View.VISIBLE, false)
+
+                val data = getSavedGoogleCredentials()
+                Log.d("Auth", data ?: "null")
+
+                configureViews(View.INVISIBLE, true)
+
+                //Complete the authentication process after validating the public key credential to your server and let the user in.
+                data?.let {
+                    sendSignInResponseToServer()
+                    listener.showHome()
+                }
+            }
+        }
+    }
+
     private fun configureViews(visibility: Int, flag: Boolean) {
         configureProgress(visibility)
         binding.signInWithSavedCredentials.isEnabled = flag
+        binding.signInWithGoogle.isEnabled = flag
     }
 
     private fun configureProgress(visibility: Int) {
@@ -149,6 +175,104 @@ class SignInFragment : Fragment() {
             //If you are also using any external sign-in libraries, parse them here with the utility functions provided.
         }
 
+        return null
+    }
+
+    private suspend fun getSavedGoogleCredentials(): String? {
+
+        val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
+            .setFilterByAuthorizedAccounts(true)
+            .setServerClientId("348542075961-27pvb7t08v209k64r1lflnu07r383fe0.apps.googleusercontent.com")
+            .setAutoSelectEnabled(true)
+            .setNonce("N7jd8Wl2zYErgT45BQm_UA")
+            .build()
+
+        val request: GetCredentialRequest = GetCredentialRequest.Builder()
+            .addCredentialOption(googleIdOption)
+            .build()
+
+        try {
+            val result = credentialManager.getCredential(
+                requireActivity(),
+                request
+            )
+            return handleGoogleSignIn(result)
+
+        } catch (e: Exception) {
+            return handleGoogleSignInFailure(e)
+        }
+    }
+
+    private suspend fun createGoogleCredentials(): String? {
+
+        val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
+            .setFilterByAuthorizedAccounts(false)
+            .setServerClientId("348542075961-27pvb7t08v209k64r1lflnu07r383fe0.apps.googleusercontent.com")
+            .build()
+
+        val request: GetCredentialRequest = GetCredentialRequest.Builder()
+            .addCredentialOption(googleIdOption)
+            .build()
+
+        try {
+            val result = credentialManager.getCredential(
+                requireActivity(),
+                request
+            )
+            return handleGoogleSignIn(result)
+
+        } catch (e: Exception) {
+            configureViews(View.INVISIBLE, true)
+            Log.e("Auth", "getCredential failed with exception: " + e.message.toString())
+            activity?.showErrorAlert(
+                "An error occurred while authenticating through saved credentials. Check logs for additional details"
+            )
+        }
+        return null
+    }
+
+    fun handleGoogleSignIn(result: GetCredentialResponse): String? {
+        // Handle the successfully returned credential.
+        val credential = result.credential
+
+        when (credential) {
+            is CustomCredential -> {
+                if (credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
+
+                    try {
+                        // Use googleIdTokenCredential and extract id to validate and
+                        // authenticate on your server.
+                        val googleIdTokenCredential = GoogleIdTokenCredential
+                            .createFrom(credential.data)
+                        return "Got Sign In - User:${googleIdTokenCredential.displayName}"
+                    } catch (e: GoogleIdTokenParsingException) {
+                        Log.e("Auth", "Received an invalid google id token response", e)
+                    }
+                } else {
+                    // Catch any unrecognized credential type here.
+                    Log.e("Auth", "Unexpected type of credential")
+                }
+            }
+
+            else -> {
+                // Catch any unrecognized credential type here.
+                Log.e("Auth", "Unexpected type of credential")
+            }
+        }
+
+        return null
+    }
+
+    suspend fun handleGoogleSignInFailure(e: Exception): String? {
+        if (e is NoCredentialException) {
+            return createGoogleCredentials()
+        } else {
+            configureViews(View.INVISIBLE, true)
+            Log.e("Auth", "getCredential failed with exception: " + e.message.toString())
+            activity?.showErrorAlert(
+                "An error occurred while authenticating through saved credentials. Check logs for additional details"
+            )
+        }
         return null
     }
 
