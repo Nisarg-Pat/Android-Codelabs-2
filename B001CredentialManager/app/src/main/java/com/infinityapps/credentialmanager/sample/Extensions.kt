@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.credentialmanager.sample
+package com.infinityapps.credentialmanager.sample
 
 import android.content.Context
 import androidx.appcompat.app.AlertDialog

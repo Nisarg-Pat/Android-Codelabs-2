@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package com.google.credentialmanager.sample
+package com.infinityapps.credentialmanager.sample
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.google.credentialmanager.sample.HomeFragment.HomeFragmentCallback
-import com.google.credentialmanager.sample.MainFragment.MainFragmentCallback
-import com.google.credentialmanager.sample.R.id
-import com.google.credentialmanager.sample.SignInFragment.SignInFragmentCallback
-import com.google.credentialmanager.sample.SignUpFragment.SignUpFragmentCallback
-import com.google.credentialmanager.sample.databinding.ActivityMainBinding
+import com.infinityapps.credentialmanager.sample.HomeFragment.HomeFragmentCallback
+import com.infinityapps.credentialmanager.sample.MainFragment.MainFragmentCallback
+import com.infinityapps.credentialmanager.sample.R.id
+import com.infinityapps.credentialmanager.sample.SignInFragment.SignInFragmentCallback
+import com.infinityapps.credentialmanager.sample.SignUpFragment.SignUpFragmentCallback
+import com.infinityapps.credentialmanager.sample.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), MainFragmentCallback, HomeFragmentCallback,
     SignInFragmentCallback, SignUpFragmentCallback {

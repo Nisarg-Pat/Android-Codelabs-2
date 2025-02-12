@@ -30,10 +30,10 @@ def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
-    namespace 'com.google.credentialmanager.sample'
+    namespace 'com.infinityapps.credentialmanager.sample'
     compileSdk 34
     defaultConfig {
-        applicationId "com.google.credentialmanager.sample"
+        applicationId "com.infinityapps.credentialmanager.sample"
         minSdk 21
         targetSdk 34
         versionCode 1
