@@ -111,4 +111,8 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
     implementation "androidx.lifecycle:lifecycle-runtime-compose:2.6.1"
 
+    implementation "androidx.credentials:credentials:<latest version>"
+    implementation "androidx.credentials:credentials-play-services-auth:<latest version>"
+    implementation "com.google.android.libraries.identity.googleid:googleid:<latest version>"
+
 }
