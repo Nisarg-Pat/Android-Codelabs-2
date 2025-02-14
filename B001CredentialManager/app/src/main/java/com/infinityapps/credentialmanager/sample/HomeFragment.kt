@@ -18,14 +18,20 @@ package com.infinityapps.credentialmanager.sample
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
+import androidx.credentials.ClearCredentialStateRequest
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.credentials.CredentialManager
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.infinityapps.credentialmanager.sample.databinding.FragmentHomeBinding
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
+    private lateinit var credentialManager: CredentialManager
     private lateinit var binding: FragmentHomeBinding
     private lateinit var listener: HomeFragmentCallback
 
@@ -53,10 +59,20 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        credentialManager = CredentialManager.create(requireActivity())
         configureSignedInText()
 
         binding.logout.setOnClickListener {
-            listener.logout()
+            lifecycleScope.launch {
+                try {
+                    val request = ClearCredentialStateRequest(ClearCredentialStateRequest.TYPE_CLEAR_CREDENTIAL_STATE)
+                    credentialManager.clearCredentialState(request)
+                } catch (e: Exception) {
+                    Log.e("Auth", "Exception while signing out: ${e.message.toString()}")
+                }
+
+                listener.logout()
+            }
         }
     }
 
