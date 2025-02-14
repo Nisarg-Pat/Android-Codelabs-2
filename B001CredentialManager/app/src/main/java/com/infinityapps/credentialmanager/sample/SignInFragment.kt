@@ -181,7 +181,7 @@ class SignInFragment : Fragment() {
     private suspend fun getSavedGoogleCredentials(): String? {
 
         val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
-            .setFilterByAuthorizedAccounts(true)
+            .setFilterByAuthorizedAccounts(false)
             .setServerClientId("348542075961-27pvb7t08v209k64r1lflnu07r383fe0.apps.googleusercontent.com")
             .setAutoSelectEnabled(true)
             .setNonce("N7jd8Wl2zYErgT45BQm_UA")
